@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoidCrew — P2P Space Deception</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar"><div class="brand"><span class="brand-dot"></span> VOIDCREW</div><div class="status" id="connectionStatus">OFFLINE</div></header>
+
+    <main class="screen" id="homeScreen">
+      <section class="hero panel">
+        <div class="eyebrow">PEER-TO-PEER SOCIAL DEDUCTION</div>
+        <h1>Trust no one.<br><span>Survive the void.</span></h1>
+        <p>Play a lightweight browser multiplayer game using WebRTC DataChannels. No game server is required.</p>
+        <div class="actions"><button id="createBtn" class="primary">CREATE HOST</button><button id="joinBtn" class="secondary">JOIN GAME</button></div>
+        <div class="note">For this serverless build, players exchange WebRTC connection codes manually.</div>
+      </section>
+      <section class="features">
+        <div class="feature panel"><b>01</b><h3>Move</h3><p>Explore the ship with WASD or arrow keys.</p></div>
+        <div class="feature panel"><b>02</b><h3>Complete</h3><p>Finish tasks before the Impostor takes control.</p></div>
+        <div class="feature panel"><b>03</b><h3>Deduce</h3><p>Report, discuss, vote and survive.</p></div>
+      </section>
+    </main>
+
+    <main class="screen hidden" id="lobbyScreen">
+      <section class="panel lobby">
+        <div class="section-head"><div><div class="eyebrow">LOBBY</div><h2 id="lobbyTitle">HOST ROOM</h2></div><button class="ghost" id="backHomeBtn">EXIT</button></div>
+        <div id="hostPanel" class="connection-box hidden">
+          <label>Your player name<input id="hostName" maxlength="16" value="Captain" /></label>
+          <button class="primary" id="startHostBtn">START HOST</button>
+          <p class="muted">After starting, copy the Offer Code and send it to another player.</p>
+          <textarea id="offerBox" readonly placeholder="Offer code appears here..."></textarea>
+          <button class="secondary" id="copyOfferBtn">COPY OFFER</button>
+          <label>Paste player's Answer Code<textarea id="answerBox" placeholder="Paste answer here..."></textarea></label>
+          <button class="secondary" id="applyAnswerBtn">CONNECT PLAYER</button>
+        </div>
+        <div id="joinPanel" class="connection-box hidden">
+          <label>Your player name<input id="joinName" maxlength="16" value="Crewmate" /></label>
+          <label>Paste Host Offer Code<textarea id="joinOfferBox" placeholder="Paste host offer here..."></textarea></label>
+          <button class="primary" id="createAnswerBtn">CREATE ANSWER</button>
+          <p class="muted">Send the generated Answer Code back to the host.</p>
+          <textarea id="joinAnswerBox" readonly placeholder="Answer code appears here..."></textarea>
+          <button class="secondary" id="copyAnswerBtn">COPY ANSWER</button>
+        </div>
+        <div class="players panel-inner"><div class="section-head"><h3>CREW <span id="playerCount">0</span></h3><span class="muted">MAX 8</span></div><ul id="playerList"></ul></div>
+        <button id="launchBtn" class="primary wide hidden">LAUNCH MISSION</button>
+      </section>
+    </main>
+
+    <main class="screen hidden" id="gameScreen">
+      <div class="game-layout">
+        <aside class="hud panel">
+          <div class="hud-title">VOIDCREW <span id="roleBadge">CREW</span></div>
+          <div class="task-progress"><div class="section-head"><span>TASKS</span><span id="taskText">0 / 3</span></div><div class="progress"><i id="taskBar"></i></div></div>
+          <div class="task-list" id="taskList"></div>
+          <div class="controls">WASD / ARROWS — MOVE<br>E — TASK<br>R — REPORT<br>SPACE — MEETING</div>
+        </aside>
+        <section class="game panel"><canvas id="gameCanvas" width="960" height="600"></canvas><div class="game-overlay" id="gameMessage"></div></section>
+      </div>
+    </main>
+
+    <div class="modal hidden" id="meetingModal"><div class="panel modal-card"><div class="eyebrow">EMERGENCY MEETING</div><h2>Who is suspicious?</h2><div id="voteList" class="vote-list"></div><button id="skipVoteBtn" class="secondary wide">SKIP VOTE</button></div></div>
+    <div class="toast" id="toast"></div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>
